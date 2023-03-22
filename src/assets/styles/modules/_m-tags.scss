@@ -1,0 +1,12 @@
+.tag {
+    @apply px-2 space-x-2 text-white;
+}
+.tagAlert {
+    @apply bg-red-500;
+}
+.tagRegular {
+    @apply bg-mineralGreen-50 text-white;
+}
+.tagVip {
+    @apply text-gray-700 bg-yellow;
+}

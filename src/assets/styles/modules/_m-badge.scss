@@ -1,0 +1,12 @@
+.badge {
+    @apply p-2 rounded text-white;
+}
+.badgeClose {
+    @apply bg-gray-100 text-gray-700;
+}
+.badgeSuccess {
+    @apply bg-green;
+}
+.badgeWarning {
+    @apply bg-yellow;
+}

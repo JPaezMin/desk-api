@@ -1,0 +1,9 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+
+# Temporary env files
+/public/env-config.js
+env-config.js

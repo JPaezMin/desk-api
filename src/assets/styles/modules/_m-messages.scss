@@ -1,0 +1,10 @@
+.sent,
+.received {
+    @apply rounded-lg p-2;
+}
+.sent {
+    @apply bg-gray-200 text-gray-600;
+}
+.received {
+    @apply bg-blue-500 text-white;
+}

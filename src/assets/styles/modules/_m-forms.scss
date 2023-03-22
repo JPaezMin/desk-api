@@ -1,0 +1,9 @@
+fieldset {
+  @apply border-0 mt-4 p-0;
+}
+legend {
+  @apply font-semibold;
+}
+input {
+  @apply bg-transparent;
+}

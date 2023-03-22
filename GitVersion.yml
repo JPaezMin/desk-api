@@ -1,0 +1,6 @@
+
+continuous-delivery-fallback-tag: ''
+mode: Mainline
+ignore:
+  sha: []
+merge-message-formats: {}

@@ -1,0 +1,57 @@
+html {
+  scroll-behavior: smooth;
+  @media screen and (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
+}
+body {
+  @apply text-gray-700 h-screen;
+  font-family: "Roboto", sans-serif;
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f2f5f5;
+    width: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #dee2e6;
+    border-radius: 20px;
+  }
+}
+body.dark {
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.2);
+    width: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+  }
+  textarea {
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.82);
+    transition: -webkit-text-fill-color 0.3s var(--n-bezier),
+      caret-color 0.3s var(--n-bezier), color 0.3s var(--n-bezier),
+      text-decoration-color 0.3s var(--n-bezier);
+    &:hover {
+      @apply border border-blue-800;
+    }
+  }
+}
+h1 {
+  @apply text-2xl font-bold text-center;
+  color: #323745;
+  font-family: "Roboto", sans-serif;
+}
+h2 {
+  @apply text-2xl font-bold pb-2 border-b border-gray-200 mb-2 text-gray-700;
+  font-family: "Domine", serif;
+}
+.casino-logo {
+  height: 45px;
+}
+.country-flag {
+  width: 20px;
+}

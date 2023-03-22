@@ -1,0 +1,85 @@
+image: node:16
+
+variables:
+  GIT_DEPTH: 1000
+  PUBLISH_OUTPUT_DIR: publish
+  ENV_VERSION_KEY: RUBIKO_APP_VERSION
+  CLUSTER_NAME: rubiko-cluster
+  SERVICE_NAME: rubiko-agent-ui
+
+stages:
+  - publish
+  - delivery
+  - deploy
+
+publish:
+  stage: publish
+  before_script:
+    - npm install
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist
+    expire_in: 8 hour
+
+version:
+  stage: publish
+  image: mcr.microsoft.com/dotnet/sdk:6.0
+  before_script:
+    - export PATH=$PATH:/root/.dotnet/tools
+    - dotnet tool install --global GitVersion.Tool --version 5.8.0
+    - dotnet gitversion
+    - SEMVER=$(dotnet gitversion -showvariable semver)
+    - mkdir version
+    - echo "${SEMVER}" > ./version/semver
+    - APP_VERSION=$(cat ./version/semver)
+  script:
+    - sed -E -i "s/^($ENV_VERSION_KEY[[:blank:]]*=[[:blank:]]*).*/\1$APP_VERSION/" .env
+    - cat .env
+  artifacts:
+    paths:
+      - version/
+    expire_in: 8 hour
+
+container_registry:
+  stage: delivery
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  before_script:
+    # - >
+    #     IMAGE_TAG=$(sed 's/.*"version": "\(.*\)".*/\1/;t;d' ./package.json)
+    - IMAGE_TAG=$(cat ./version/semver)
+    - echo "Building image with version $IMAGE_TAG"
+    - cat $CI_PROJECT_DIR/Dockerfile
+    - |-
+      cat << EOF > /kaniko/.docker/config.json
+      {
+        "auths": {
+          "$CI_REGISTRY": {
+            "username": "$CI_REGISTRY_USER",
+            "password": "$CI_REGISTRY_PASSWORD"
+          }
+        }
+      }
+      EOF
+    - cat /kaniko/.docker/config.json
+  script:
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:latest --destination $CI_REGISTRY_IMAGE:$IMAGE_TAG
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - when: on_success
+
+production:
+  stage: deploy
+  image: registry.gitlab.com/rubiko-tech/toolbelt/rubiko-aws-cli
+  script:
+    - echo "Forcing re-deployment"
+    - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
+  dependencies:
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - when: manual

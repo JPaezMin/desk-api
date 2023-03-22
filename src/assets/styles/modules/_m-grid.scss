@@ -1,0 +1,18 @@
+@import '/node_modules/ag-grid-community/dist/styles/ag-grid.css';
+@import '/node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin';
+.ag-theme-alpine {
+    @include ag-theme-alpine(
+        (
+            alpine-active-color: #2e64b1,
+            header-background-color: #f5f5f5,
+            header-foreground-color: #616161,
+            row-hover-color: #e3f2fd,
+            selected-row-background-color: #bbdefb,
+            font-family: (
+                'Roboto',
+                sans-serif,
+            ),
+            font-size: 16px,
+        )
+    );
+}

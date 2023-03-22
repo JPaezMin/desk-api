@@ -1,0 +1,11 @@
+@layer components {
+    .emojibutton__active .vue3-discord-emojipicker__emojibutton {
+        width: 23px;
+    }
+    .vue3-emojipicker .emojibutton__active {
+        @apply border border-gray-500 bg-gray-100 text-gray-700 rounded-none;
+    }
+    .vue3-emojipicker input.vue3-discord-emojipicker__input {
+        @apply text-gray-700;
+    }
+}

@@ -1,0 +1,32 @@
+//----------------------------------*\
+// THEME
+//----------------------------------*/
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+  [type="button"],
+  [type="reset"],
+  [type="submit"] {
+    background-color: var(--n-color);
+  }
+}
+
+@import "../styles/theme/fonts.scss";
+@import "../styles/theme/globals.scss";
+
+//----------------------------------*\
+// LAYOUT
+//----------------------------------*/
+
+//----------------------------------*\
+// MODULES
+//----------------------------------*/
+@import "../styles/modules/m-badge";
+@import "../styles/modules/m-emoticon-picker";
+@import "../styles/modules/m-forms";
+@import "../styles/modules/m-grid";
+@import "../styles/modules/m-messages";
+@import "../styles/modules/m-tables";
+@import "../styles/modules/m-tags";
